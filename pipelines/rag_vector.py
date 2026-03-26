@@ -37,12 +37,18 @@ def run():
         filtered_docs = docs
 
         if "优点" in query:
-            temp = [doc for doc in docs if "优点" in doc.page_content]
+           temp = []
+        for doc in docs:
+            if "优点" in doc.page_content:
+                    temp.append(doc)
             if temp:
                 filtered_docs = temp
 
         if "缺点" in query:
-            temp = [doc for doc in docs if "缺点" in doc.page_content]
+             temp = []
+        for doc in docs:
+            if "缺点" in doc.page_content:
+                    temp.append(doc)
             if temp:
                 filtered_docs = temp
 
@@ -53,7 +59,7 @@ def run():
 
         # 去重优化（保留排序顺序）
         unique_contents = []
-        seen = set()
+        seen = set()       #集合不允许重复
         for doc in docs:
             if doc.page_content not in seen:
                 unique_contents.append(doc.page_content)
@@ -62,7 +68,7 @@ def run():
         # 拼接上下文，使用去重后的内容
         context = "\n".join(unique_contents)
 
-      #   # 打印检索结果（调试用）
+        # 打印检索结果（调试用）
         print("\n🔍 检索结果：")
         for i, doc in enumerate(docs):
             print(f"\n--- 结果 {i} ---")
