@@ -14,7 +14,8 @@ def run():
     documents = load_pdf(file_path)
     chunks = split_documents(documents)
 
-    print(f"\n📊 chunk数量：{len(chunks)}")
+    # #打印chunk数量（调试用）
+    # print(f"\n📊 chunk数量：{len(chunks)}")        
 
     # 构建向量库
     embedding_model = get_embedding_model()
@@ -38,16 +39,16 @@ def run():
 
         if "优点" in query:
            temp = []
-        for doc in docs:
-            if "优点" in doc.page_content:
+           for doc in docs:
+                if "优点" in doc.page_content:
                     temp.append(doc)
-            if temp:
+           if temp:
                 filtered_docs = temp
 
-        if "缺点" in query:
-             temp = []
-        for doc in docs:
-            if "缺点" in doc.page_content:
+        elif "缺点" in query:
+            temp = []
+            for doc in docs:
+                if "缺点" in doc.page_content:
                     temp.append(doc)
             if temp:
                 filtered_docs = temp
@@ -68,15 +69,15 @@ def run():
         # 拼接上下文，使用去重后的内容
         context = "\n".join(unique_contents)
 
-        # 打印检索结果（调试用）
-        print("\n🔍 检索结果：")
-        for i, doc in enumerate(docs):
-            print(f"\n--- 结果 {i} ---")
-            print(doc.page_content[:200])
-            print("来源：", doc.metadata)
+        # # 打印检索结果（调试用）
+        # print("\n🔍 检索结果：")
+        # for i, doc in enumerate(docs):
+        #     print(f"\n--- 结果 {i} ---")
+        #     print(doc.page_content[:200])
+        #     print("来源：", doc.metadata)
 
-        print("\n📚 拼接后的上下文：")
-        print(context[:500])
+        # print("\n📚 拼接后的上下文：")
+        # print(context[:500])
 
         # 拼接 Prompt
         prompt = f"""
@@ -96,8 +97,9 @@ def run():
 
        回答：
        """
-        print("\n🧠 Prompt：")
-        print(prompt[:500])
+        # #打印prompt（调试用）
+        # print("\n🧠 Prompt：")
+        # print(prompt[:500])
 
         # 调用大模型
         answer = generate_answer(prompt)
